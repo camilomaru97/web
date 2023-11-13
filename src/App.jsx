@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { FormUsuario } from './components/FormUsuario';
 import { Users } from './components/Users';
 
 export const App = () => {
-  const [users, setUsers] = useState([]);
+  const inicialState = JSON.parse(localStorage.getItem('users')) || []
+  const [users, setUsers] = useState(inicialState);
   const [userEdit, setUserEdit] = useState()
+
+  useEffect(()=>{
+    localStorage.setItem("users", JSON.stringify(users))
+  },[users])
+  
 
   const onAddUser = (user) => {
     setUsers([...users, user]);
